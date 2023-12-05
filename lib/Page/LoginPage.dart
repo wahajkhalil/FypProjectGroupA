@@ -135,6 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 50),
+
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
@@ -153,6 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 30),
+
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),

@@ -18,7 +18,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
         // // Navigate to the login screen after the delay
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
         );
       },
     );

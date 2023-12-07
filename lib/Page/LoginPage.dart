@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:core'; // Add this line to import the core library for the RegExp class
+import 'dart:core';
+
+import 'package:fyp_project_group_a/Page/OtpScreen.dart'; // Add this line to import the core library for the RegExp class
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -103,18 +105,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    setState(() {
-                                      // Validate each field and update the validation status
-                                      isPhoneNumberValid = phoneRegex.hasMatch(phoneNumberController.text) &&
-                                          phoneNumberController.text.isNotEmpty;
-                                      isPasswordValid = passwordController.text.isNotEmpty;
-                                    });
-
-                                    if (_isInputValid()) {
-                                      // Add your sign-in logic here
-                                    } else {
-                                      // Show an error message or handle empty/invalid input
-                                    }
+                                    // Navigate to OtpScreen
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => OtpScreen()),
+                                    );
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.orange,
@@ -238,6 +233,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool _isInputValid() {
-    return isPhoneNumberValid && isPasswordValid;
+    if (isPhoneNumberValid && isPasswordValid) {
+
+      return true;
+    } else {
+      return false;
+    }
   }
+
 }

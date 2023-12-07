@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp_project_group_a/Page/LoginPage.dart';
+import 'package:fyp_project_group_a/Page/OtpScreen.dart';
 
 import 'Page/SplashScreen.dart';
 

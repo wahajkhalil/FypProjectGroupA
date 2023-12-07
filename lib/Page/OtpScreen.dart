@@ -97,7 +97,7 @@ class OtpScreen extends StatelessWidget {
                   ),
                 ),
                 Pinput(
-                  length: 5,
+                  length: 4,
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: defaultPinTheme.decoration!.copyWith(

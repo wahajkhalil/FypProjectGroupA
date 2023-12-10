@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Page/ForgetPassword.dart';
 import 'dart:core';
 
 import 'package:fyp_project_group_a/Page/OtpScreen.dart'; // Add this line to import the core library for the RegExp class
@@ -70,9 +71,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: Text(
                                       'Sign In',
                                       style: TextStyle(
+                                        fontFamily: 'Intersemibold', // This should match the family name specified in pubspec.yaml
+
                                         fontSize: 24.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                       ),
                                     ),
                                   ),
                                 ),
@@ -86,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   phoneNumberController,
                                   isPassword: false,
                                   isValid: isPhoneNumberValid,
+
                                 ),
                               ),
                               Padding(
@@ -125,6 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         color: Colors.white,
+                                        fontFamily: "Intersemibold"
                                       ),
                                     ),
                                   ),
@@ -136,6 +140,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                                    );
+
                                     // Add your forgot password logic here
                                   },
                                   child: Center(
@@ -144,8 +153,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         color: Colors.orange,
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                        fontFamily: "Intersemibold"
+
+                                       ),
                                     ),
                                   ),
                                 ),
@@ -163,6 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 16.0,
+                                              fontFamily: "Inter"
+
                                           ),
                                         ),
                                         TextSpan(
@@ -170,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: TextStyle(
                                             color: Colors.orange,
                                             fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
+                                              fontFamily: "Intersemibold"
                                           ),
                                         ),
                                       ],
@@ -198,6 +210,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextField(
+        style: TextStyle(
+          fontFamily: 'Intersemibold', // This should match the family name specified in pubspec.yaml
+
+          fontSize: 14.0,
+
+         ),
         controller: controller,
         keyboardType: isPassword ? TextInputType.text : TextInputType.text,
         obscureText: isPassword ? !isPasswordVisible : false,

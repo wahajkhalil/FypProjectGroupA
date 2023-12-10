@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Util/MyDialogUtils.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -67,22 +68,24 @@ class OtpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 100),
                 const Text(
-                  "Verification",
+                  "Enter the OTP Code",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
+                    fontSize: 20,
+                    fontFamily: "Inter"
+                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   child: const Text(
                     "Enter the code sent to your number",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
+                        fontFamily: "Inter"
+
                     ),
                   ),
                 ),
@@ -93,18 +96,22 @@ class OtpScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
+                        fontFamily: "Inter"
+                        ,fontWeight: FontWeight.bold
+
                     ),
                   ),
                 ),
                 Pinput(
                   length: 4,
                   defaultPinTheme: defaultPinTheme,
+
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: defaultPinTheme.decoration!.copyWith(
                       border: Border.all(color: Colors.white),
                     ),
                   ),
-                  onCompleted: (pin) => debugPrint(pin),
+                  onCompleted: (pin) =>  MyDialogUtils.displayDialog(context, "This Worng  otp "),
                 ),
               ],
             ),

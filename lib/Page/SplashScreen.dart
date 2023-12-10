@@ -29,47 +29,44 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     return Scaffold(
       body: Container(
         color: Color(0xFF1F6CFF), // Set the background color here
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 100),
-                Center(
-                  child: Image.asset(
-                    'assets/images/Logo.png',
-                    height: 150,
-                    width: 150,
-                  ),
-                ),
-                Image.asset(
-                  'assets/images/B-Wallet.png',
-                  height: 50,
-                  width: 50,
-                ),
-                SizedBox(height: 20),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(
-                      'assets/images/Pattern.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
+            SizedBox(height: 100),
+            Center(
+              child: Image.asset(
+                'assets/images/Logo.png',
+                height: 150,
+                width: 150,
+              ),
             ),
-            Positioned(
-              bottom: 140,
-              left: 0,
-              right: 0,
-              child: Container(
+            Image.asset(
+              'assets/images/B-Wallet.png',
+              height: 50,
+              width: 50,
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Text(
-                  "Your best choice for e-wallet",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                child: Image.asset(
+                  'assets/images/Pattern.png',
+                  fit: BoxFit.cover,
                 ),
               ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontFamily: "Inter"
+
+                ),
+                "Your best choice for e-wallet",
+               ),
             ),
           ],
         ),

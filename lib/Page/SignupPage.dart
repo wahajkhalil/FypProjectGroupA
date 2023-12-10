@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:fyp_project_group_a/Page/ForgetPassword.dart';
-import 'dart:core';
+import 'package:intl/intl.dart';
 
-import 'package:fyp_project_group_a/Page/OtpScreen.dart';
-import 'package:fyp_project_group_a/Page/SignupPage.dart'; // Add this line to import the core library for the RegExp class
-
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
-class _LoginScreenState extends State<LoginScreen> {
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  DateTime? selectedDate;
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
-  final RegExp phoneRegex = RegExp(r'^[0-9]{10}$');
-
-  // Track the validation status of each field
-  bool isPhoneNumberValid = true;
-  bool isPasswordValid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top:18.0),
+                        padding: const EdgeInsets.only(top: 18.0),
                         child: Container(
                           height: 700,
                           decoration: BoxDecoration(
@@ -70,12 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 10, left: 20),
                                     child: Text(
-                                      'Sign In',
+                                      'Sign Up',
                                       style: TextStyle(
-                                        fontFamily: 'Intersemibold', // This should match the family name specified in pubspec.yaml
-
+                                        fontFamily: 'Intersemibold',
                                         fontSize: 24.0,
-                                       ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -84,13 +78,30 @@ class _LoginScreenState extends State<LoginScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 20, right: 20),
                                 child: _buildTextField(
-                                  'Phone Number | User ID ',
+                                  'Name',
+                                  Icons.person,
+                                  nameController,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: _buildTextField(
+                                  'Phone Number',
                                   Icons.phone,
                                   phoneNumberController,
-                                  isPassword: false,
-                                  isValid: isPhoneNumberValid,
-
                                 ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: _buildTextField(
+                                  'Email Address',
+                                  Icons.email,
+                                  emailController,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: _buildDateField(),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 20, right: 20),
@@ -99,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Icons.lock,
                                   passwordController,
                                   isPassword: true,
-                                  isValid: isPasswordValid,
                                 ),
                               ),
                               const SizedBox(height: 20.0),
@@ -109,11 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Navigate to OtpScreen
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => OtpScreen()),
-                                    );
+                                    // Implement your signup logic here
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.orange,
@@ -125,74 +131,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      'Sign In',
+                                      'Sign Up',
                                       style: TextStyle(
-                                        fontSize: 18.0,
-                                        color: Colors.white,
-                                        fontFamily: "Intersemibold"
-                                      ),
+                                          fontSize: 18.0,
+                                          color: Colors.white,
+                                          fontFamily: "Intersemibold"),
                                     ),
                                   ),
                                 ),
                               ),
                               SizedBox(height: 50),
-
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-                                    );
-
-                                    // Add your forgot password logic here
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      'Forgot Password?',
-                                      style: TextStyle(
-                                        color: Colors.orange,
-                                        fontSize: 16.0,
-                                        fontFamily: "Intersemibold"
-
-                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 30),
-
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // Navigate to the sign-up screen
-                                      // Replace 'SignUpScreen' with the actual name of your sign-up screen class
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
-                                    },
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: "Don't have an account yet ",
-                                            style: TextStyle(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Already have an account? ",
+                                          style: TextStyle(
                                               color: Colors.grey,
                                               fontSize: 16.0,
-                                              fontFamily: "Inter",
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: "? Sign Up",
-                                            style: TextStyle(
+                                              fontFamily: "Inter"),
+                                        ),
+                                        TextSpan(
+                                          text: "Sign In",
+                                          style: TextStyle(
                                               color: Colors.orange,
                                               fontSize: 16.0,
-                                              fontFamily: "Intersemibold",
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                              fontFamily: "Intersemibold"),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -212,17 +181,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(String label, IconData icon, TextEditingController controller,
-      {bool isPassword = false, bool isValid = true}) {
+  Widget _buildTextField(
+      String label, IconData icon, TextEditingController controller,
+      {bool isPassword = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextField(
         style: TextStyle(
-          fontFamily: 'Intersemibold', // This should match the family name specified in pubspec.yaml
-
+          fontFamily: 'Intersemibold',
           fontSize: 14.0,
-
-         ),
+        ),
         controller: controller,
         keyboardType: isPassword ? TextInputType.text : TextInputType.text,
         obscureText: isPassword ? !isPasswordVisible : false,
@@ -245,25 +213,50 @@ class _LoginScreenState extends State<LoginScreen> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          // Highlight the border if the field is not valid
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(
-              color: isValid ? Colors.blue : Colors.red, // Change the border color for invalid fields
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateField() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: GestureDetector(
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: selectedDate ?? DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime.now(),
+          );
+
+          if (pickedDate != null && pickedDate != selectedDate) {
+            setState(() {
+              selectedDate = pickedDate;
+            });
+          }
+        },
+        child: AbsorbPointer(
+          child: TextField(
+            style: TextStyle(
+              fontFamily: 'Intersemibold',
+              fontSize: 14.0,
+            ),
+            controller: TextEditingController(
+                text: selectedDate != null
+                    ? DateFormat('dd/MM/yyyy').format(selectedDate!)
+                    : ''),
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              labelText: 'Date of Birth',
+              prefixIcon: Icon(Icons.calendar_today),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
-  bool _isInputValid() {
-    if (isPhoneNumberValid && isPasswordValid) {
-
-      return true;
-    } else {
-      return false;
-    }
-  }
-
 }

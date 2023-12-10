@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   pinput: ^3.0.1
   pin_input_text_field: ^4.5.1
+  intl:
 
 dev_dependencies:
   flutter_test:

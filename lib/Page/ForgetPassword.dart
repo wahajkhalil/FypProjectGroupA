@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Page/ResetPassword.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -72,6 +73,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
                 onPressed: () {
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+                  );
+
                   // Implement your logic for resetting the password here
                   // You can check the isEmailValid to determine whether the email is valid
                 },

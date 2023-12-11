@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/DB/DatabaseHelper.dart';
+import 'package:fyp_project_group_a/Model/user.dart';
+import 'package:fyp_project_group_a/Page/LoginPage.dart';
+import 'package:fyp_project_group_a/Util/MyDialogUtils.dart';
 import 'package:intl/intl.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -13,13 +17,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   DateTime? selectedDate;
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
+  final DatabaseHelper databaseHelper = DatabaseHelper();
+
+  String? nameError;
+  String? phoneNumberError;
+  String? emailError;
+  String? dateOfBirthError;
+  String? passwordError;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeDatabase();
+  }
+
+  void _initializeDatabase() async {
+    await databaseHelper.initDatabase();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+
         body: Container(
+          height: MediaQuery.of(context).size.height, // Set a fixed height
+
           color: Color(0xFF357AFF),
           child: ListView(
             children: [
@@ -81,6 +105,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   'Name',
                                   Icons.person,
                                   nameController,
+                                  isPassword: false,
+                                  errorText: nameError,
                                 ),
                               ),
                               Padding(
@@ -89,6 +115,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   'Phone Number',
                                   Icons.phone,
                                   phoneNumberController,
+                                  isPassword: false,
+                                  errorText: phoneNumberError,
                                 ),
                               ),
                               Padding(
@@ -97,6 +125,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   'Email Address',
                                   Icons.email,
                                   emailController,
+                                  isPassword: false,
+                                  errorText: emailError,
                                 ),
                               ),
                               Padding(
@@ -110,6 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Icons.lock,
                                   passwordController,
                                   isPassword: true,
+                                  errorText: passwordError,
                                 ),
                               ),
                               const SizedBox(height: 20.0),
@@ -119,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Implement your signup logic here
+                                    _registerUser();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.orange,
@@ -140,30 +171,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 50),
+                              SizedBox(height: 5),
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: "Already have an account? ",
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 16.0,
-                                              fontFamily: "Inter"),
-                                        ),
-                                        TextSpan(
-                                          text: "Sign In",
-                                          style: TextStyle(
-                                              color: Colors.orange,
-                                              fontSize: 16.0,
-                                              fontFamily: "Intersemibold"),
-                                        ),
-                                      ],
+                                  child:GestureDetector(
+                                onTap: () {
+                                  // Handle the click here, e.g., navigate to another screen
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+
+
+                                }, child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Already have an account? ",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16.0,
+                                          fontFamily: "Inter"),
                                     ),
-                                  ),
+                                    TextSpan(
+                                      text: "Sign In",
+                                      style: TextStyle(
+                                          color: Colors.orange,
+                                          fontSize: 16.0,
+                                          fontFamily: "Intersemibold"),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              ),
+
                                 ),
                               ),
                             ],
@@ -183,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildTextField(
       String label, IconData icon, TextEditingController controller,
-      {bool isPassword = false}) {
+      {bool isPassword = false, String? errorText}) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextField(
@@ -194,9 +233,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         controller: controller,
         keyboardType: isPassword ? TextInputType.text : TextInputType.text,
         obscureText: isPassword ? !isPasswordVisible : false,
+        onChanged: (value) {
+          setState(() {
+            // Update the corresponding errorText state variable
+            if (controller.text.isEmpty) {
+              errorText = 'Field cannot be empty';
+            } else {
+              errorText = null;
+            }
+          });
+        },
         decoration: InputDecoration(
           labelText: label,
           prefixIcon: Icon(icon),
+          errorText: errorText,
           suffixIcon: isPassword
               ? IconButton(
             icon: Icon(
@@ -233,6 +283,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (pickedDate != null && pickedDate != selectedDate) {
             setState(() {
               selectedDate = pickedDate;
+              dateOfBirthError = null; // Reset error when a valid date is selected
             });
           }
         },
@@ -250,6 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             decoration: InputDecoration(
               labelText: 'Date of Birth',
               prefixIcon: Icon(Icons.calendar_today),
+              errorText: dateOfBirthError,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -258,5 +310,130 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void _registerUser() async {
+    if (_validateInputs()) {
+      User newUser = User(
+        name: nameController.text,
+        phoneNumber: phoneNumberController.text,
+        email: emailController.text,
+        dateOfBirth: selectedDate,
+        password: passwordController.text,
+      );
+
+      // Check if email is already registered
+      bool isEmailRegistered =
+      await databaseHelper.isEmailRegistered(emailController.text);
+      if (isEmailRegistered) {
+        // Email is already registered, show error message
+        MyDialogUtils.showGenericDialogNegative(
+          context: context,
+          title: 'Email is already registered.',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
+
+        return;
+      }
+
+      int userId = await databaseHelper.insertUseritem(newUser);
+
+      if (userId > 0) {
+        // Successfully registered
+        MyDialogUtils.showGenericDialogPositive(
+          context: context,
+          title: 'User registered with ID: $userId',
+          onConfirmPressed: (value) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+
+           },
+        );
+
+        // You can navigate to another screen or perform any other actions.
+      } else {
+        // Failed to register.
+        MyDialogUtils.showGenericDialogNegative(
+          context: context,
+          title: 'Failed to register user',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
+      }
+    }
+  }
+
+  bool _validateInputs() {
+    bool isValid = true;
+
+    if (nameController.text.isEmpty) {
+      setState(() {
+        nameError = 'Field cannot be empty';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        nameError = null;
+      });
+    }
+
+    if (phoneNumberController.text.isEmpty) {
+      setState(() {
+        phoneNumberError = 'Field cannot be empty';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        phoneNumberError = null;
+      });
+    }
+
+    if (emailController.text.isEmpty) {
+      setState(() {
+        emailError = 'Field cannot be empty';
+      });
+      isValid = false;
+    } else if (!isValidEmail(emailController.text)) {
+      setState(() {
+        emailError = 'Enter a valid email address';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        emailError = null;
+      });
+    }
+
+    if (selectedDate == null) {
+      setState(() {
+        dateOfBirthError = 'Field cannot be empty';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        dateOfBirthError = null;
+      });
+    }
+
+    if (passwordController.text.isEmpty) {
+      setState(() {
+        passwordError = 'Field cannot be empty';
+      });
+      isValid = false;
+    } else {
+      setState(() {
+        passwordError = null;
+      });
+    }
+
+    return isValid;
+  }
+
+  bool isValidEmail(String email) {
+    // Add your email validation logic here
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+")
+        .hasMatch(email);
   }
 }

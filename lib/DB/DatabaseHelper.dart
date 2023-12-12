@@ -105,4 +105,15 @@ class DatabaseHelper {
     );
     return result.isNotEmpty;
   }
+
+  Future<bool> authenticateUser(String identifier, String password) async {
+    final db = await database;
+    List<Map<String, dynamic>> result = await db.query(
+      _tableName,
+      where: 'phoneNumber = ? OR email = ? AND password = ?',
+      whereArgs: [identifier, identifier, password],
+    );
+    return result.isNotEmpty;
+  }
+
 }

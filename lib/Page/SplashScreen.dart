@@ -15,11 +15,33 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     Future.delayed(
       Duration(seconds: 2),
           () {
+            Navigator.push(
+                context,
+                PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) {
+              return LoginScreen();
+            },
+            transitionsBuilder:
+            (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOutQuart;
+
+            var tween = Tween(begin: begin, end: end)
+                .chain(CurveTween(curve: curve));
+
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+            );
+            }));
+
+
+
         // Navigate to the login screen after the delay
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
+
       },
     );
   }
@@ -67,7 +89,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                 ),
                 "Your best choice for e-wallet",
                ),
-            ),
+
+            )
+            ,
+            SizedBox(height: 20),
+
           ],
         ),
       ),

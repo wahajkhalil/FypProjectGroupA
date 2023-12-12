@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/DB/DatabaseHelper.dart';
 import 'package:fyp_project_group_a/Page/ForgetPassword.dart';
 import 'dart:core';
 
 import 'package:fyp_project_group_a/Page/OtpScreen.dart';
-import 'package:fyp_project_group_a/Page/SignupPage.dart'; // Add this line to import the core library for the RegExp class
+import 'package:fyp_project_group_a/Page/SignupPage.dart';
+import 'package:fyp_project_group_a/Util/MyDialogUtils.dart'; // Add this line to import the core library for the RegExp class
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,9 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = false;
   final RegExp phoneRegex = RegExp(r'^[0-9]{10}$');
 
+  // DatabaseHelper instance for database operations
+  final DatabaseHelper databaseHelper = DatabaseHelper();
+
   // Track the validation status of each field
   bool isPhoneNumberValid = true;
   bool isPasswordValid = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,10 +116,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     // Navigate to OtpScreen
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => OtpScreen()),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => OtpScreen()),
+                                    // );
+                                    _loginUser();
+
+
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.orange,
@@ -257,13 +266,57 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+  void _loginUser() async {
+    setState(() {
+      // Reset validation status for each login attempt
+      isPhoneNumberValid = true;
+      isPasswordValid = true;
+    });
+
+    if (_isInputValid()) {
+      // Verify the credentials against the local database
+      bool isValid = await databaseHelper.authenticateUser(
+        phoneNumberController.text,
+        passwordController.text,
+      );
+
+      if (isValid) {
+        MyDialogUtils.showGenericDialogPositive(
+          context: context,
+          title: 'You are Sucsess fully login ',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
+        // Navigate to the OtpScreen if the credentials are valid
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OtpScreen()),
+        );
+      } else {
+        // Invalid credentials, update the validation status
+        setState(() {
+          isPhoneNumberValid = false;
+          isPasswordValid = false;
+        });
+        MyDialogUtils.showGenericDialogNegative(
+          context: context,
+          title: 'May be id pass or phone no is Worng ! ',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
+      }
+    }
+  }
+
   bool _isInputValid() {
     if (isPhoneNumberValid && isPasswordValid) {
-
       return true;
     } else {
       return false;
     }
   }
-
 }
+

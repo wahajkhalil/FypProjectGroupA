@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Page/LoginPage.dart';
 import 'package:fyp_project_group_a/Util/MyDialogUtils.dart';
 
+import '../DB/DatabaseHelper.dart';
+
 class ResetPasswordScreen extends StatefulWidget {
+  final String email;
+
+  ResetPasswordScreen({required this.email});
+
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
@@ -17,8 +24,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xFF1F6CFF),
         iconTheme: IconThemeData(color: Colors.white),
-
-       ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
@@ -27,16 +33,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             children: [
               SizedBox(height: 20),
               Text(
+                'Create Your Password: ${widget.email}',
                 textAlign: TextAlign.center,
-                'Create Your Password',
                 style: TextStyle(fontFamily: "Inter-Medium", fontSize: 20),
               ),
               SizedBox(height: 8),
               Text(
-                textAlign: TextAlign.center,
-
                 'Enter a new password to reset your account',
-                style: TextStyle(fontFamily: "Inter", fontSize:14),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: "Inter", fontSize: 14),
               ),
               SizedBox(height: 20),
               _buildPasswordTextField(
@@ -49,37 +54,55 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 labelText: 'Confirm Password',
               ),
               SizedBox(height: 20),
-              Spacer( ),
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    // Validate that the passwords match
+                    if (newPasswordController.text != confirmPasswordController.text) {
+                      // Show an error dialog
+                      MyDialogUtils.showGenericDialogNegative(
+                        context: context,
+                        title: 'Passwords do not match. Please try again.',
+                        onConfirmPressed: (value) {
+                          print('User entered: $value');
+                        },
+                      );
+
+                      return;
+                    }
+
+                    // Update the password in the local database
+                    await DatabaseHelper().updatePassword(widget.email, newPasswordController.text);
+
+                    // Show a success dialog
 
                     MyDialogUtils.showGenericDialogPositive(
                       context: context,
-                      title: 'Yay! Your new password has been saved',
+                      title: 'Your new password has been saved.',
                       onConfirmPressed: (value) {
-                        print('User entered: $value');
-                      },
-                    );
 
-                    // Implement your logic for resetting the password here
-                    // You can check the isEmailValid to determine whether the email is valid
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+
+                       },
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
-                     shape: RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child: Text(
-
                     'Reset Password',
                     style: TextStyle(color: Colors.white, fontFamily: "Intersemibold"),
                   ),
                 ),
               ),
-
             ],
           ),
         ),

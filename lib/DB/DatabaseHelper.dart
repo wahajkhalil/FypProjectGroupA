@@ -115,5 +115,13 @@ class DatabaseHelper {
     );
     return result.isNotEmpty;
   }
-
+  Future<void> updatePassword(String identifier, String newPassword) async {
+    final db = await database;
+    await db.update(
+      _tableName,
+      {'password': newPassword},
+      where: 'email = ? OR phoneNumber = ?',
+      whereArgs: [identifier, identifier],
+    );
+  }
 }

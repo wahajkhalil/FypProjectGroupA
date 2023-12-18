@@ -281,10 +281,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
 
           if (pickedDate != null && pickedDate != selectedDate) {
-            setState(() {
-              selectedDate = pickedDate;
-              dateOfBirthError = null; // Reset error when a valid date is selected
-            });
+            // Check if the selected date is at least 18 years ago
+            DateTime eighteenYearsAgo = DateTime.now().subtract(Duration(days: 18 * 365));
+            if (pickedDate.isBefore(eighteenYearsAgo)) {
+              setState(() {
+                selectedDate = pickedDate;
+                dateOfBirthError = null; // Reset error when a valid date is selected
+              });
+            } else {
+              setState(() {
+                dateOfBirthError = 'Age must be at least 18 years old';
+              });
+            }
           }
         },
         child: AbsorbPointer(
@@ -294,9 +302,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               fontSize: 14.0,
             ),
             controller: TextEditingController(
-                text: selectedDate != null
-                    ? DateFormat('dd/MM/yyyy').format(selectedDate!)
-                    : ''),
+              text: selectedDate != null
+                  ? DateFormat('dd/MM/yyyy').format(selectedDate!)
+                  : '',
+            ),
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: 'Date of Birth',
@@ -342,14 +351,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (userId > 0) {
         // Successfully registered
-        MyDialogUtils.showGenericDialogPositive(
-          context: context,
-          title: 'User registered with ID: $userId',
-          onConfirmPressed: (value) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
 
-           },
-        );
 
         // You can navigate to another screen or perform any other actions.
       } else {

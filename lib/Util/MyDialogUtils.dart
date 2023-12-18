@@ -80,8 +80,7 @@ class MyDialogUtils {
                     if (onConfirmPressed != null) {
                       onConfirmPressed(textFieldController.text);
                     }
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
+                   },
                   child: Text('Confirm', style: TextStyle(color: Colors.white)),
                 ),
               ],

@@ -13,39 +13,34 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
     // Simulate a delay using Future.delayed
     Future.delayed(
-      Duration(seconds: 2),
-          () {
-            Navigator.push(
-                context,
-                PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) {
-              return LoginScreen();
+        Duration(seconds: 2),
+            () {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return LoginScreen();
+              },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOutQuart;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                var offsetAnimation = animation.drive(tween);
+
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+                  },
+            ),
+          );
             },
-            transitionsBuilder:
-            (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOutQuart;
-
-            var tween = Tween(begin: begin, end: end)
-                .chain(CurveTween(curve: curve));
-
-            var offsetAnimation = animation.drive(tween);
-
-            return SlideTransition(
-            position: offsetAnimation,
-            child: child,
-            );
-            }));
-
-
-
-        // Navigate to the login screen after the delay
-
-      },
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

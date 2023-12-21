@@ -39,6 +39,9 @@ dependencies:
   intl:
   sqflite: ^2.3.0
   path: ^1.8.3
+  provider: ^6.1.1
+  camera: ^0.10.5+7
+
   path_provider:
   flutter_svg: ^2.0.9
   cached_network_image: ^3.3.0

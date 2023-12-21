@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Home/bottomNavigation.dart';
 import 'package:fyp_project_group_a/Util/MyDialogUtils.dart';
 import 'package:pinput/pinput.dart';
 
@@ -111,8 +112,14 @@ class OtpScreen extends StatelessWidget {
                       border: Border.all(color: Colors.white),
                     ),
                   ),
-                  onCompleted: (pin) =>  MyDialogUtils.displayDialog(context, "This Worng  otp "),
-                ),
+                  onCompleted: (pin) => {
+                     // MyDialogUtils.displayDialog(context, "This Worng  otp "),
+                     Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => BottomNavBarScreen()) // Removes all routes from the stack
+)
+,          }
+                  ),
               ],
             ),
           ),

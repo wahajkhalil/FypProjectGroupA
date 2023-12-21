@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Page/EnterPinCode.dart';
 import 'package:fyp_project_group_a/Page/LoginPage.dart';
 import 'package:fyp_project_group_a/Page/OtpScreen.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:   SplashScreenPage(),
+      home: SendEnterPinScreen(),
     );
   }
 }

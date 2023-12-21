@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp_project_group_a/DB/DatabaseHelper.dart';
+import 'package:fyp_project_group_a/Home/bottomNavigation.dart';
 import 'package:fyp_project_group_a/Page/ForgetPassword.dart';
 import 'dart:core';
 
@@ -207,8 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(String label, IconData icon, TextEditingController controller,
-      {bool isPassword = false, bool isValid = true}) {
+  Widget _buildTextField(String label, IconData icon, TextEditingController controller, {bool isPassword = false, bool isValid = true}) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: TextField(
@@ -224,16 +224,16 @@ class _LoginScreenState extends State<LoginScreen> {
           prefixIcon: Icon(icon),
           suffixIcon: isPassword
               ? IconButton(
-            icon: Icon(
-              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              setState(() {
-                isPasswordVisible = !isPasswordVisible;
-              });
-            },
-          )
+                  icon: Icon(
+                    isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isPasswordVisible = !isPasswordVisible;
+                    });
+                  },
+                )
               : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -271,20 +271,24 @@ class _LoginScreenState extends State<LoginScreen> {
         // );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => OtpScreen()),
+          MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
         );
       } else {
-        setState(() {
-          isPhoneNumberValid = false;
-          isPasswordValid = false;
-        });
-        MyDialogUtils.showGenericDialogNegative(
-          context: context,
-          title: 'Invalid ID or password',
-          onConfirmPressed: (value) {
-            print('User entered: $value');
-          },
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
         );
+        // setState(() {
+        //   isPhoneNumberValid = false;
+        //   isPasswordValid = false;
+        // });
+        // MyDialogUtils.showGenericDialogNegative(
+        //   context: context,
+        //   title: 'Invalid ID or password',
+        //   onConfirmPressed: (value) {
+        //     print('User entered: $value');
+        //   },
+        // );
       }
     }
   }

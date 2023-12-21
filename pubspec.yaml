@@ -43,6 +43,9 @@ dependencies:
   camera: ^0.10.5+7
 
   path_provider:
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.0
+  pin_code_fields: ^8.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

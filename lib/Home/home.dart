@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fyp_project_group_a/Home/notification_screen.dart';
+import 'package:fyp_project_group_a/Page/SendEnterAmount.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -461,10 +462,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          const Text(
-                            'Send',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.0),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SendEnterAmount()));
+                            },
+                            child: const Text(
+                              'Send',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14.0),
+                            ),
                           )
                         ],
                       ),

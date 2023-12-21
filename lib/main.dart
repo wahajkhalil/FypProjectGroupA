@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class CameraApp extends StatefulWidget {
   /// Default Constructor
   const CameraApp({super.key});
@@ -491,4 +490,3 @@ class _CameraAppState extends State<CameraApp> {
     );
   }
 }
-

@@ -262,33 +262,33 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (isValid) {
-        // MyDialogUtils.showGenericDialogPositive(
-        //   context: context,
-        //   title: 'You are Successfully logged in',
-        //   onConfirmPressed: (value) {
-        //     print('User entered: $value');
-        //   },
-        // );
+        MyDialogUtils.showGenericDialogPositive(
+          context: context,
+          title: 'You are Successfully logged in',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
         );
       } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
-        );
-        // setState(() {
-        //   isPhoneNumberValid = false;
-        //   isPasswordValid = false;
-        // });
-        // MyDialogUtils.showGenericDialogNegative(
-        //   context: context,
-        //   title: 'Invalid ID or password',
-        //   onConfirmPressed: (value) {
-        //     print('User entered: $value');
-        //   },
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
         // );
+        setState(() {
+          isPhoneNumberValid = false;
+          isPasswordValid = false;
+        });
+        MyDialogUtils.showGenericDialogNegative(
+          context: context,
+          title: 'Invalid ID or password',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
+        );
       }
     }
   }

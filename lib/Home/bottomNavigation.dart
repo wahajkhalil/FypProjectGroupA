@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/bottomNavigationProvider.dart';
-import 'package:fyp/main.dart';
+import 'package:fyp_project_group_a/Home/bottomNavigationProvider.dart';
+import 'package:fyp_project_group_a/Home/home.dart';
+import 'package:fyp_project_group_a/main.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -80,7 +81,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    CameraApp()), // Replace NotificationScreen() with your actual notification screen widget
+                                    CameraApp()
+                                    ), // Replace NotificationScreen() with your actual notification screen widget
                           );
                         },
                         backgroundColor: Colors.blue, // Set your desired color
@@ -116,7 +118,7 @@ class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Search Page'),
+      child: Text('Cashflow Page'),
     );
   }
 }
@@ -127,7 +129,7 @@ class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Favorites Page (To Be Implemented)'),
+      child: Text('Message Page'),
     );
   }
 }
@@ -138,7 +140,7 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Profile Page (To Be Implemented)'),
+      child: Text('Profile Page'),
     );
   }
 }

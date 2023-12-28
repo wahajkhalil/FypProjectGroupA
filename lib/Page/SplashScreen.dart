@@ -52,16 +52,12 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             SizedBox(height: 100),
             Center(
               child: Image.asset(
-                'assets/images/Logo.png',
+                'assets/images/Logo_App.png',
                 height: 150,
                 width: 150,
               ),
             ),
-            Image.asset(
-              'assets/images/B-Wallet.png',
-              height: 50,
-              width: 50,
-            ),
+
             SizedBox(height: 20),
             Expanded(
               child: Align(

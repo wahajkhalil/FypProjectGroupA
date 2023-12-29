@@ -110,7 +110,7 @@ class DetailCardScreen extends StatelessWidget {
                     width: 20,
                   ),
                   RowButtonWidget(
-                    width: 156,
+                    width: 146,
                     height: 56,
                     text: 'Save Changes',
                     backgroundColor: secondaryColorGrey,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp_project_group_a/Page/LoginPage.dart';
 import 'package:fyp_project_group_a/constants/app_colors.dart';
 import 'package:fyp_project_group_a/presentation/screens/contact_screen.dart';
 import 'package:fyp_project_group_a/presentation/screens/help_screen.dart';
@@ -202,6 +203,14 @@ class AppSettingsList extends StatelessWidget {
             firstText: 'Logout',
             color: secondaryColorRed,
             secondIcon: Image.asset('assets/images/Right.png'),
+            onTap: () {
+              // Add logic to perform logout (clear session, etc.) before navigating to login
+              // For simplicity, just navigate to the login screen here
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            },
           ),
           const SizedBox(height: 20),
         ],

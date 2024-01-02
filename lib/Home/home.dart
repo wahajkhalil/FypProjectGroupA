@@ -448,33 +448,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 8), // Adjust the spacing between boxes
                       Column(
                         children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF8674F5),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Container(
-                                width:
-                                    20, // Adjust the size of the inner container to fit the icon
-                                height:
-                                    20, // Adjust the size of the inner container to fit the icon
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.arrow_upward,
-                                    color: Color(0xFF8674F5),
-                                    size:
-                                        19, // Adjust the size of the icon for visibility
+                          InkWell(
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF8674F5),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width:
+                                      20, // Adjust the size of the inner container to fit the icon
+                                  height:
+                                      20, // Adjust the size of the inner container to fit the icon
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.arrow_upward,
+                                      color: Color(0xFF8674F5),
+                                      size:
+                                          19, // Adjust the size of the icon for visibility
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SendEnterAmount()));
+                            },
                           ),
                           const SizedBox(height: 5),
                           InkWell(
@@ -482,7 +491,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SendEnterAmount()));
+                                      builder: (context) =>
+                                          const SendEnterAmount()));
                             },
                             child: const Text(
                               'Send',

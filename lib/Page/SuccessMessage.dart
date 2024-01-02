@@ -96,6 +96,9 @@ class _SendSuccessSentInMessageScreenState
       leading: AppbarLeadingImage(
         imagePath: ImageConstant.imgIconLeft,
         margin: EdgeInsets.only(left: 24.h),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       centerTitle: true,
       title: AppbarTitle(

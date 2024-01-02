@@ -10,7 +10,7 @@ import 'package:fyp_project_group_a/widgets/custom_pin_code_text_field.dart';
 import 'package:fyp_project_group_a/widgets/custom_elevated_button.dart';
 
 class SendEnterPinScreen extends StatefulWidget {
-  const SendEnterPinScreen({super.key});
+  const SendEnterPinScreen({Key? key}) : super(key: key);
 
   @override
   _SendEnterPinScreenState createState() => _SendEnterPinScreenState();
@@ -25,70 +25,72 @@ class _SendEnterPinScreenState extends State<SendEnterPinScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0XFF1E6BFF),
-        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
-        body: Container(
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
-            horizontal: 37.h,
-            vertical: 52.v,
-          ),
-          child: Column(
-            children: [
-              Text(
-                "Enter the Security Pin",
-                style: theme.textTheme.titleLarge,
-              ),
-              SizedBox(height: 6.v),
-              Opacity(
-                opacity: 0.7,
-                child: Container(
-                  width: 274.h,
-                  margin: EdgeInsets.only(
-                    left: 13.h,
-                    right: 12.h,
-                  ),
-                  child: Text(
-                    "Security code is used to verify your every transaction to be more secure",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: CustomTextStyles.bodyMediumOnPrimaryContainer_1
-                        .copyWith(
-                      height: 1.70,
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.symmetric(
+              horizontal: 37.h,
+              vertical: 52.v,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Enter the Security Pin",
+                  style: theme.textTheme.titleLarge,
+                ),
+                SizedBox(height: 6.v),
+                Opacity(
+                  opacity: 0.7,
+                  child: Container(
+                    width: 274.h,
+                    margin: EdgeInsets.only(
+                      left: 13.h,
+                      right: 12.h,
+                    ),
+                    child: Text(
+                      "Security code is used to verify your every transaction to be more secure",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: CustomTextStyles.bodyMediumOnPrimaryContainer_1
+                          .copyWith(
+                        height: 1.70,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 19.v),
-              Padding(
-                padding: EdgeInsets.only(left: 1.h),
-                child: CustomPinCodeTextField(
-                  context: context,
-                  controller: pinController,
-                  onChanged: (value) {},
-                ),
-              ),
-              SizedBox(height: 20.v),
-              _buildZero(context),
-              SizedBox(height: 5.v),
-              SizedBox(height: 24.v),
-              if (showtossmessage)
-                CustomElevatedButton(
-                  height: 56.v,
-                  text: "The pin you entered is wrong",
-                  leftIcon: Container(
-                    margin: EdgeInsets.only(right: 12.h),
-                    child: CustomImageView(
-                      imagePath: ImageConstant.imgIconBoximportant,
-                      height: 24.adaptSize,
-                      width: 24.adaptSize,
-                    ),
+                SizedBox(height: 19.v),
+                Padding(
+                  padding: EdgeInsets.only(left: 1.h),
+                  child: CustomPinCodeTextField(
+                    context: context,
+                    controller: pinController,
+                    onChanged: (value) {},
                   ),
-                  buttonStyle: CustomButtonStyles.fillRed,
-                  buttonTextStyle: CustomTextStyles.bodyLargeOnPrimaryContainer,
                 ),
-            ],
+                SizedBox(height: 20.v),
+                _buildZero(context),
+                SizedBox(height: 5.v),
+                SizedBox(height: 24.v),
+                if (showtossmessage)
+                  CustomElevatedButton(
+                    height: 56.v,
+                    text: "The pin you entered is wrong",
+                    leftIcon: Container(
+                      margin: EdgeInsets.only(right: 12.h),
+                      child: CustomImageView(
+                        imagePath: ImageConstant.imgIconBoximportant,
+                        height: 24.adaptSize,
+                        width: 24.adaptSize,
+                      ),
+                    ),
+                    buttonStyle: CustomButtonStyles.fillRed,
+                    buttonTextStyle:
+                        CustomTextStyles.bodyLargeOnPrimaryContainer,
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -275,14 +277,12 @@ class _SendEnterPinScreenState extends State<SendEnterPinScreen> {
         showtossmessage = true;
       }
       if (pinController.text == '123456') {
-        //Future.delayed(const Duration(seconds: 3), () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const SendSuccessMessageScreen(),
           ),
         );
-        //});
       }
     });
   }

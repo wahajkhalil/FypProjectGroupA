@@ -127,28 +127,30 @@ class TransactionHistory extends StatelessWidget {
         itemCount: transactionModel.transactions.length,
         itemBuilder: (context, index) {
           var transaction = transactionModel.transactions[index];
-          return Container(
-            color: Color(0xFFF9F9F9),
-            child: ListTile(
-              // tileColor: Color(0xFFF9F9F9),
-              leading: Icon(Icons.star, color: Colors.orange),
-              trailing: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Text(
-                    transaction.isIncome
-                        ? '+ \$${transaction.amount.toStringAsFixed(2)}'
-                        : '- \$${transaction.amount.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: transaction.isIncome
-                          ? Colors.black
-                          : Color(0xFF17D85C),
-                    )),
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Container(
+              color: Color(0xFFF9F9F9),
+              child: ListTile(
+                leading: Icon(Icons.star, color: Colors.orange),
+                trailing: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Text(
+                      transaction.isIncome
+                          ? '+ \$${transaction.amount.toStringAsFixed(2)}'
+                          : '- \$${transaction.amount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: transaction.isIncome
+                            ? Colors.black
+                            : Color(0xFF17D85C),
+                      )),
+                ),
+                title: Text(
+                  transaction.title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(transaction.date),
               ),
-              title: Text(
-                transaction.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(transaction.date),
             ),
           );
         },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fyp_project_group_a/Home/bottomNavigationProvider.dart';
 import 'package:fyp_project_group_a/Home/home.dart';
+import 'package:fyp_project_group_a/Page/ChatPage.dart';
+import 'package:fyp_project_group_a/Page/MoneyTracker.dart';
 import 'package:fyp_project_group_a/main.dart';
 import 'package:fyp_project_group_a/presentation/screens/main_profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +15,9 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   final List<Widget> _pages = [
     HomeScreen(),
-    const Page2(),
+    MoneyTracker(),
     const Page3(),
-    const Page3(),
+    ChatPage(),
     const MainProfileScreen(),
   ];
 
@@ -55,7 +57,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                         label: 'Cashflow',
                       ),
                       BottomNavigationBarItem(
-                        icon: SizedBox.shrink(), // Hidden item to accommodate the FAB
+                        icon: SizedBox
+                            .shrink(), // Hidden item to accommodate the FAB
                         label: '',
                       ),
                       BottomNavigationBarItem(
@@ -79,23 +82,27 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CameraApp()), // Replace NotificationScreen() with your actual notification screen widget
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CameraApp()), // Replace NotificationScreen() with your actual notification screen widget
                           );
                         },
                         backgroundColor: Colors.blue, // Set your desired color
                         shape: CircleBorder(),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                          Image.asset(
-                            'assets/images/pay.png',
-                            color: Colors.white,
-                            width: 30,
-                            height: 30,
-                          ),
-                          const Text(
-                            'Pay',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ])),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/pay.png',
+                                color: Colors.white,
+                                width: 30,
+                                height: 30,
+                              ),
+                              const Text(
+                                'Pay',
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ])),
                   ),
                 ),
               ],

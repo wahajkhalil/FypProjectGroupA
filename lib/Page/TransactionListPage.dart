@@ -100,19 +100,11 @@ class _TransactionListPageState extends State<TransactionListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        foregroundColor: Color(0xFF949494),
-        backgroundColor: Colors.white,
-        title: Text(
-          'Transaction History',
-          style:
-              TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF949494)),
-        ),
+        title: Text('Transaction History'),
         actions: [
           IconButton(
-            icon: Image.asset('assets/images/filter.png',
-                color: Color(0xFF949494)),
+            icon: Icon(Icons.filter_list),
             onPressed: () {
               // Show filter modal
               showModalBottomSheet(
@@ -134,7 +126,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
                         SizedBox(height: 10.0),
                         // Filter options
                         ListTile(
-                          leading: Icon(Icons.radio),
+                          leading: Icon(Icons.filter),
                           title: Text('This Week'),
                           onTap: () {
                             // Handle filter option 1
@@ -193,48 +185,17 @@ class _TransactionListPageState extends State<TransactionListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                OutlinedButton(
-                  onPressed: () => filterTransactions('All'),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8.0), // Adjust the border radius
-                    ),
-                    side: BorderSide(color: Colors.orange), // Border color
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  ),
-                  child: Text(
-                    'All Transactions',
-                    style: TextStyle(color: Colors.orange),
-                  ),
-                ),
-                OutlinedButton(
+                ElevatedButton(
                   onPressed: () => filterTransactions('Income'),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8.0), // Adjust the border radius
-                    ),
-                    side: BorderSide(color: Colors.orange), // Border color
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  ),
-                  child: Text('Income', style: TextStyle(color: Colors.orange)),
+                  child: Text('Income'),
                 ),
-                OutlinedButton(
+                ElevatedButton(
                   onPressed: () => filterTransactions('Expense'),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8.0), // Adjust the border radius
-                    ),
-                    side: BorderSide(color: Colors.orange), // Border color
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  ),
-                  child:
-                      Text('Expense', style: TextStyle(color: Colors.orange)),
+                  child: Text('Expense'),
+                ),
+                ElevatedButton(
+                  onPressed: () => filterTransactions('All'),
+                  child: Text('All Transactions'),
                 ),
               ],
             ),
@@ -263,31 +224,28 @@ class _TransactionListPageState extends State<TransactionListPage> {
                       ),
                     );
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Container(
-                      color: Color(0xFFF9F9F9),
-                      child: ListTile(
-                        leading: Icon(Icons.star, color: Colors.orange),
-                        trailing: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Text(
-                            transaction.amount > 0
-                                ? '+ \$${transaction.amount.toStringAsFixed(2)}'
-                                : '- \$${transaction.amount.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              color: transaction.amount < 1
-                                  ? Colors.black
-                                  : Color(0xFF17D85C),
-                            ),
+                  child: Container(
+                    color: Color(0xFFF9F9F9),
+                    child: ListTile(
+                      leading: Icon(Icons.star, color: Colors.orange),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text(
+                          transaction.amount > 0
+                              ? '+ \$${transaction.amount.toStringAsFixed(2)}'
+                              : '- \$${transaction.amount.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            color: transaction.amount < 1
+                                ? Colors.black
+                                : Color(0xFF17D85C),
                           ),
                         ),
-                        title: Text(
-                          transaction.name,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(formatDate(transaction.date)),
                       ),
+                      title: Text(
+                        transaction.name,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(formatDate(transaction.date)),
                     ),
                   ),
                 );

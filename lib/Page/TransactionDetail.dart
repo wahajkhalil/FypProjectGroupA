@@ -9,53 +9,27 @@ class TransactionDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1F6CFF),
-      // appBar: AppBar(
-      //   backgroundColor: Color(0xFF1F6CFF),
-      //   foregroundColor: Colors.white,
-      //   title: Text('Transaction Detail'),
-      // ),
+      appBar: AppBar(
+        title: Text('Transaction Detail'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Top Section
-            SizedBox(
-              height: 40,
-            ),
-            IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Text(
-                '${transaction.name}',
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+            Text(
+              'Title: ${transaction.name}',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Text(
-                'Transaction ID: ${transaction.transactionId}',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            SizedBox(height: 8.0),
+            Text('Transaction ID: ${transaction.transactionId}'),
 
             // Card Section
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white, // Set the background color
-                borderRadius: BorderRadius.circular(10), // Set rounded corners
-              ),
+            Card(
               margin: EdgeInsets.symmetric(vertical: 16.0),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -69,54 +43,34 @@ class TransactionDetailPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8.0),
-                    Text('${transaction.shortDescription}'),
+                    Text('Date: ${transaction.date}'),
                     SizedBox(height: 8.0),
-                    Text('${transaction.date}'),
+                    Text('Short Description: ${transaction.shortDescription}'),
                     SizedBox(height: 16.0),
-                    Text('${transaction.thankYouMessage}'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        OutlinedButton(
-                          onPressed: () {
-                            // Add your share functionality
-                          },
-                          child: Text('Share'),
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  8.0), // Adjust the border radius
-                            ),
-                            side: BorderSide(
-                                color: Colors.orange), // Border color
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8.0),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add your send again functionality
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  8.0), // Adjust the border radius
-                            ),
-                            side: BorderSide(
-                                color: Colors.orange), // Border color
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8.0),
-                          ),
-                          child: Text('Send Again'),
-                        ),
-                      ],
-                    ),
+                    Text('Thank You Message: ${transaction.thankYouMessage}'),
                   ],
                 ),
               ),
             ),
 
             // Buttons Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Add your share functionality
+                  },
+                  child: Text('Share'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add your send again functionality
+                  },
+                  child: Text('Send Again'),
+                ),
+              ],
+            ),
           ],
         ),
       ),

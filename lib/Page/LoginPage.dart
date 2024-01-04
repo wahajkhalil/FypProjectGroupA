@@ -269,14 +269,21 @@ class _LoginScreenState extends State<LoginScreen> {
         //     print('User entered: $value');
         //   },
         // );
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
         );
       } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
+        setState(() {
+          isPhoneNumberValid = false;
+          isPasswordValid = false;
+        });
+        MyDialogUtils.showGenericDialogNegative(
+          context: context,
+          title: 'Invalid ID or password',
+          onConfirmPressed: (value) {
+            print('User entered: $value');
+          },
         );
         // setState(() {
         //   isPhoneNumberValid = false;
